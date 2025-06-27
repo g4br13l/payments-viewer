@@ -5,7 +5,12 @@ A Payments visualizer
 - View payments fetched from API
 - Order Payments by column
 - Search Payments by text
-- Filter Payments by date (building) 
+- Filter Payments by date (building)
+
+https://github.com/user-attachments/assets/7ec7e3ef-d300-4b7d-99f5-4875b881b9a9
+
+
+
 
 ### Technical Features:
 - API Mocked with json-mock library
