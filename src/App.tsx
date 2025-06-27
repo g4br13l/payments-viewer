@@ -2,7 +2,7 @@ import { Toaster } from "sonner";
 import { InputCalendar } from "./components/base/inputCalendar";
 import { InputSearch } from "./components/base/inputSearch";
 import { PaymentTable } from "./components/base/paymentTable";
-import { useFetchPayments } from "./hooks/useFetchPayments";
+import { usePayments } from "./hooks/usePayments";
 import { txtNormalize } from "./lib/dataUtils";
 
 
@@ -10,7 +10,7 @@ import { txtNormalize } from "./lib/dataUtils";
 
 export default function App() {
 
-  const { initPayments, payments, setPayments, isLoading } = useFetchPayments()
+  const { initPayments, payments, setPayments, isLoading } = usePayments()
 
   const handleTextSearchChange = (searchText: string) => {
     if (!searchText) return setPayments(initPayments)

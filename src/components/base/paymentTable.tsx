@@ -20,18 +20,13 @@ import { cn } from '@/lib/utils';
 
 
 type TbHeadPropsT = {
-  handleSortClickFn: (col: TbPaymentColT, sort: TbDataOrderT) => void
+  sort?: TbDataOrderT
+  sortToggleFn: (col: TbPaymentColT) => void
 }
 
-function TbHead({ handleSortClickFn }: TbHeadPropsT) {
+function TbHead({ sort, sortToggleFn }: TbHeadPropsT) {
 
-  const [sort, setSort] = useState<TbDataOrderT>({ order: 'asc', tbCol: 'id' })
-
-  const handleToggleOrderClick = (tbCol: TbPaymentColT, currSort: TbDataOrderT) => {
-    const newSort: TbDataOrderT = { ...currSort, order: currSort.order === 'asc' ? 'desc' : 'asc' }
-    setSort(newSort)
-    handleSortClickFn(tbCol, newSort)
-  }
+  console.log('(TbHead) sort:', sort)
 
   return (
     <TableHeader>
@@ -43,17 +38,17 @@ function TbHead({ handleSortClickFn }: TbHeadPropsT) {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => handleToggleOrderClick(tbCol, sort)}
+                onClick={() => sortToggleFn(tbCol)}
               >
-                {sort.order === 'asc' ? (
+                {sort?.order === 'asc' ? (
                   <ArrowDown
                     size="16"
-                    className={cn(sort.tbCol !== tbCol && 'text-ring')}
+                    className={cn(sort.tbCol === tbCol ? 'text-primary' : 'text-ring')}
                   />
                 ) : (
                   <ArrowUp
                     size="16"
-                    className={cn(sort.tbCol !== tbCol && 'text-ring')}
+                    className={cn(sort?.tbCol === tbCol ? 'text-primary' : 'text-ring')}
                   />
                 )}
               </Button>
@@ -81,13 +76,21 @@ export function PaymentTable({
   isLoading,
 }: PaymentTablePropsT) {
 
-  console.log('(PaymentTable):', { payments, isLoading })
 
-  function handleSortClick(col: TbPaymentColT, sort: TbDataOrderT) {
+  const [sort, setSort] = useState<TbDataOrderT>()
+
+  console.log('(PaymentTable):', { payments, sort })
+
+
+  function handleSortClick(col: TbPaymentColT) {
+    const _sort: TbDataOrderT = sort ?? { tbCol: 'id', order: 'desc' }
     const sortedTbData = [...payments].sort(
-      (payA, payB) => sortOrderCalc(payA[col], payB[col], sort.order)
+      (payA, payB) => sortOrderCalc(payA[col], payB[col], _sort.order)
     )
+    const newSort: TbDataOrderT = { tbCol: col, order: _sort.order === 'asc' ? 'desc' : 'asc' }
     setPaymentsFn(sortedTbData)
+    setSort(newSort)
+    // console.log('(handleSortClick) :', { col, sort })
   }
 
 
@@ -99,7 +102,8 @@ export function PaymentTable({
         <Table>
           <TableCaption>Payment List</TableCaption>
           <TbHead
-            handleSortClickFn={handleSortClick}
+            sort={sort}
+            sortToggleFn={handleSortClick}
           />
           <TableBody>
             {payments.map(p => (

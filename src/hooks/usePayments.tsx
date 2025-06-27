@@ -10,7 +10,7 @@ const URL = {
 } as const
 
 
-export function useFetchPayments() {
+export function usePayments() {
 
 
   const [payments, setPayments] = useState<PaymentT[]>([])
