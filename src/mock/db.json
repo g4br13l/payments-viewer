@@ -1,0 +1,22 @@
+{
+  "payments": [
+    {
+      "id": "1",
+      "description": "Des 1",
+      "date": "2025-01-01T18:00:00Z",
+      "amount": 100
+    },
+    {
+      "id": "2",
+      "description": "Des 2",
+      "date": "2025-01-04T18:00:00Z",
+      "amount": 200
+    },
+    {
+      "id": "3",
+      "description": "Des 3",
+      "date": "2025-01-03T18:00:00Z",
+      "amount": 200
+    }
+  ]
+}
