@@ -106,7 +106,7 @@ export function PaymentTable({
               <TableRow key={p.id}>
                 <TableCell> {p.id} </TableCell>
                 <TableCell> {p.description} </TableCell>
-                <TableCell> {p.date} </TableCell>
+                <TableCell> {new Date(p.date).toLocaleDateString()} </TableCell>
                 <TableCell> {p.amount} </TableCell>
               </TableRow>
             ))}
