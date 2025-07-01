@@ -7,7 +7,7 @@ A Payments visualizer
 - Search Payments by text
 - Filter Payments by date (building)
 
-https://github.com/user-attachments/assets/dbe02865-1b71-401e-87fb-53b470ddc08d
+https://github.com/user-attachments/assets/86dff70d-6105-41f0-81cc-46806738f112
 
 
 
