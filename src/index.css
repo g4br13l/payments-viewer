@@ -133,7 +133,7 @@
 
 
   section {
-    @apply w-full flex flex-col flex-1 gap-6 h-full self-stretch mb-12
+    @apply w-full flex flex-col flex-1 gap-6 h-full self-stretch /* mb-12 */
   }
 
   h1, .h1 {

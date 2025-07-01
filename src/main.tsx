@@ -6,7 +6,7 @@ import App from './App.tsx'
 
 
 
-scan({ enabled: true })
+scan({ enabled: false })
 
 createRoot(document.getElementById('root')!).render(
   /* <StrictMode> */

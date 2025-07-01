@@ -46,7 +46,7 @@ export function InputDateRange({
             className="justify-between w-full font-normal"
           >
             {dtRange
-              ? `${dtRange.from?.toLocaleDateString()} - ${dtRange.from?.toLocaleDateString()}`
+              ? `${dtRange.from?.toLocaleDateString()} - ${dtRange.to?.toLocaleDateString()}`
               : 'Select date'
             }
             <ChevronDownIcon />

@@ -46,7 +46,7 @@ export default function App() {
 
       <PaymentTable
         payments={payments}
-        //setPaymentsFn={setPayments}
+        setPaymentsFn={setPayments}
         isLoading={isLoading}
       />
 

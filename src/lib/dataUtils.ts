@@ -38,5 +38,7 @@ export function sortOrderCalc(valA: string | number, valB: string | number, sort
   return 0
 }
 
-
-
+export function cleanHour(date: Date) {
+  date.setHours(0)
+  return date
+}

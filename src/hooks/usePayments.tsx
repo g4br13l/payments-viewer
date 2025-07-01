@@ -1,4 +1,4 @@
-import { txtNormalize } from "@/lib/dataUtils"
+import { cleanHour, txtNormalize } from "@/lib/dataUtils"
 import { pipe } from "@/lib/functionalPg"
 import type { PaymentT } from "@/types/payment"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -39,10 +39,10 @@ export function usePayments() {
 
   function filterByDtRange(_payments: PaymentT[], dtRange: DateRange | undefined) {
     if (!dtRange?.to || !dtRange.from) return _payments
-    const dtFrom = dtRange.from
-    const dtTo = dtRange.to
+    const dtFrom = cleanHour(dtRange.from)
+    const dtTo = cleanHour(dtRange.to)
     return _payments.filter(p => {
-      const payDate = new Date(p.date)
+      const payDate = cleanHour(new Date(p.date))
       return payDate >= dtFrom && payDate <= dtTo
     })
   }
