@@ -8,13 +8,13 @@ import { Label } from "../raw/label"
 type InputSearchPropsT = {
   label?: string
   showIcon?: boolean
-  searchFn: (value: string) => void
+  setSearchTextFn: (value: string) => void
 } & ComponentProps<'input'>
 
 export function InputSearch({
   label,
   showIcon = true,
-  searchFn,
+  setSearchTextFn,
   type = 'text',
   className,
   placeholder,
@@ -25,10 +25,10 @@ export function InputSearch({
 
   return (
 
-    <div className="w-full max-w-sm">
+    <div className={cn("w-full", className)}>
 
       {label && (
-        <Label htmlFor={inputId} className="ml-0.5 font-normal text-muted-foreground text-sm">
+        <Label htmlFor={inputId} className="my-0.5 ml-0.5 font-normal text-muted-foreground text-sm">
           {label}
         </Label>
       )}
@@ -40,9 +40,9 @@ export function InputSearch({
           </span>
         )}
         <Input
-          className={cn(showIcon && 'pl-8', className)}
+          className={cn(showIcon && 'pl-8')}
           type={type}
-          onChange={(e) => searchFn(e.target.value)}
+          onChange={(e) => setSearchTextFn(e.target.value)}
           placeholder={placeholder ?? 'search'}
           {...props}
         />

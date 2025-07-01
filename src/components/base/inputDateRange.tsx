@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
 import { useId, useState, type ComponentProps } from "react"
 import type { DateRange } from "react-day-picker"
@@ -8,33 +9,31 @@ import { Popover, PopoverContent, PopoverTrigger } from "../raw/popover"
 
 
 
-type InputCalendarPropsT = {
+type InputDateRangePropsT = {
   label?: string
+  dtRange: DateRange | undefined
+  setDtRangeFn: (dtRange: DateRange | undefined) => void
 } & ComponentProps<typeof Calendar>
 
 
-export function InputCalendar({
+export function InputDateRange({
   label,
-}: InputCalendarPropsT) {
+  dtRange,
+  setDtRangeFn,
+  className
+}: InputDateRangePropsT) {
 
-  /* const currData = new Date() */
   const [open, setOpen] = useState(false)
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(
-    /* {
-      from: new Date(currData.getFullYear(), currData.getMonth() - 1, 1),
-      to: new Date
-    } */
-  )
-
   const inputId = useId()
 
 
   return (
 
-    <div className="flex flex-col">
+
+    <div className={cn("flex flex-col w-full", className)}>
 
       {label && (
-        <Label htmlFor={inputId} className="ml-0.5 font-normal text-muted-foreground text-sm">
+        <Label htmlFor={inputId} className="my-0.5 ml-0.5 font-normal text-muted-foreground text-sm">
           {label}
         </Label>
       )}
@@ -44,10 +43,10 @@ export function InputCalendar({
           <Button
             id={inputId}
             variant="outline"
-            className="justify-between w-48 font-normal"
+            className="justify-between w-full font-normal"
           >
-            {dateRange
-              ? `${dateRange.from?.toLocaleDateString()} - ${dateRange.from?.toLocaleDateString()}`
+            {dtRange
+              ? `${dtRange.from?.toLocaleDateString()} - ${dtRange.from?.toLocaleDateString()}`
               : 'Select date'
             }
             <ChevronDownIcon />
@@ -55,19 +54,16 @@ export function InputCalendar({
         </PopoverTrigger>
 
         <PopoverContent
-          className="p-0 w-auto overflow-hidden"
+          className="p-0 w-full min-w-80 overflow-hidden"
           align="start"
         >
           <Calendar
             mode="range"
             captionLayout="dropdown"
-            defaultMonth={dateRange?.from}
+            defaultMonth={dtRange?.from}
             numberOfMonths={2}
-            selected={dateRange}
-            onSelect={(dateRange) => {
-              setDateRange(dateRange)
-              setOpen(false)
-            }}
+            selected={dtRange}
+            onSelect={(dateRange) => setDtRangeFn(dateRange)}
           />
         </PopoverContent>
 

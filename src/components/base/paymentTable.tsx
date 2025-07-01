@@ -26,7 +26,6 @@ type TbHeadPropsT = {
 
 function TbHead({ sort, sortToggleFn }: TbHeadPropsT) {
 
-  console.log('(TbHead) sort:', sort)
 
   return (
     <TableHeader>
@@ -79,7 +78,6 @@ export function PaymentTable({
 
   const [sort, setSort] = useState<TbDataOrderT>()
 
-  console.log('(PaymentTable):', { payments, sort })
 
 
   function handleSortClick(col: TbPaymentColT) {
@@ -90,7 +88,6 @@ export function PaymentTable({
     const newSort: TbDataOrderT = { tbCol: col, order: _sort.order === 'asc' ? 'desc' : 'asc' }
     setPaymentsFn(sortedTbData)
     setSort(newSort)
-    // console.log('(handleSortClick) :', { col, sort })
   }
 
 

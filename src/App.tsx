@@ -1,27 +1,26 @@
 import { Toaster } from "sonner";
-import { InputCalendar } from "./components/base/inputCalendar";
+import { InputDateRange } from "./components/base/inputDateRange";
 import { InputSearch } from "./components/base/inputSearch";
 import { PaymentTable } from "./components/base/paymentTable";
 import { usePayments } from "./hooks/usePayments";
-import { txtNormalize } from "./lib/dataUtils";
 
 
 
 
 export default function App() {
 
-  const { initPayments, payments, setPayments, isLoading } = usePayments()
+  const {
+    /* initPayments,
+    payments, */
+    filteredPayments: payments,
+    setPayments,
+    filters,
+    dtRange,
+    isLoading
+  } = usePayments()
 
-  const handleTextSearchChange = (searchText: string) => {
-    if (!searchText) return setPayments(initPayments)
-    const searchRes = initPayments.filter(
-      p => txtNormalize(p.description).startsWith(txtNormalize(searchText))
-    )
-    setPayments(searchRes)
-  }
 
-  console.log('(app):', { payments })
-
+  console.log('(App) payments:', { payments, dtRange })
 
 
   return (
@@ -31,20 +30,23 @@ export default function App() {
 
       <h1> Payment List</h1>
 
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex sm:flex-row flex-col justify-between items-center gap-6">
 
         <InputSearch
-          searchFn={handleTextSearchChange}
+          setSearchTextFn={filters.setSearchText}
           label="Search text"
         />
-        <InputCalendar
+        <InputDateRange
+          className="w-full sm:w-fit min-w-50"
           label="Filter by date"
+          dtRange={dtRange}
+          setDtRangeFn={filters.setDtRange}
         />
       </div>
 
       <PaymentTable
         payments={payments}
-        setPaymentsFn={setPayments}
+        //setPaymentsFn={setPayments}
         isLoading={isLoading}
       />
 

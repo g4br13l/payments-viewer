@@ -2,27 +2,27 @@
   "payments": [
     {
       "id": "1",
-      "description": "Description 1",
-      "date": "2025-01-01T18:00:00Z",
+      "description": "Desc 1 description",
+      "date": "2025-06-30T18:00:00Z",
       "amount": 100
     },
     {
       "id": "2",
-      "description": "Description 2",
-      "date": "2025-01-04T18:00:00Z",
+      "description": "Desc 2 description",
+      "date": "2025-07-01T18:00:00Z",
       "amount": 200
     },
     {
       "id": "3",
-      "description": "Description 3",
-      "date": "2025-01-03T18:00:00Z",
-      "amount": 200
+      "description": "Desc 3 description",
+      "date": "2025-07-02T18:00:00Z",
+      "amount": 300
     },
     {
       "id": "4",
-      "description": "Description 4",
-      "date": "2025-01-04T18:00:00Z",
-      "amount": 200
+      "description": "Desc 4 description",
+      "date": "2025-07-03T18:00:00Z",
+      "amount": 400
     }
   ]
 }

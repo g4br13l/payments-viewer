@@ -1,6 +1,10 @@
+import { txtNormalize } from "@/lib/dataUtils"
+import { pipe } from "@/lib/functionalPg"
 import type { PaymentT } from "@/types/payment"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import type { DateRange } from "react-day-picker"
 import { toast } from "sonner"
+
 
 
 
@@ -15,12 +19,39 @@ export function usePayments() {
 
   const [payments, setPayments] = useState<PaymentT[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [searchText, setSearchText] = useState<string>('')
+  const [dtRange, setDtRange] = useState<DateRange>()
+
+  console.log('(usePayments):', { searchText, dtRange })
 
   const initPaymentsRef = useRef<PaymentT[]>([])
-
   if (payments.length && initPaymentsRef.current.length === 0) {
     initPaymentsRef.current = payments
   }
+
+
+  function searchByText(_payments: PaymentT[], searchText: string | undefined) {
+    return !searchText ? _payments : _payments.filter(
+      (p) => txtNormalize(p.description).includes(txtNormalize(searchText))
+    )
+  }
+
+
+  function filterByDtRange(_payments: PaymentT[], dtRange: DateRange | undefined) {
+    if (!dtRange?.to || !dtRange.from) return _payments
+    const dtFrom = dtRange.from
+    const dtTo = dtRange.to
+    return _payments.filter(p => {
+      const payDate = new Date(p.date)
+      return payDate >= dtFrom && payDate <= dtTo
+    })
+  }
+
+  const filteredPayments = useMemo(() => pipe<PaymentT[]>(
+    (p) => searchByText(p, searchText),
+    (p) => filterByDtRange(p, dtRange)
+  )(payments), [payments, searchText, dtRange])
+
 
   useEffect(() => {
     setIsLoading(true)
@@ -41,5 +72,18 @@ export function usePayments() {
     fetchPayments()
   }, [])
 
-  return { payments, setPayments, isLoading, initPayments: initPaymentsRef.current }
+
+
+  return {
+    initPayments: initPaymentsRef.current,
+    payments,
+    filteredPayments,
+    dtRange,
+    setPayments,
+    isLoading,
+    filters: {
+      setSearchText,
+      setDtRange
+    }
+  }
 }
